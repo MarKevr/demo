@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <style type="css/text">
+        div>form>table>tr>td{
+            width: 300px;
+            height: 50px;
+
+
+        }
+    </style> -->
+</head>
+<body>
+    <div id="app">
+        <form action="#">
+            <input type="text" placeholder="请输入书名" v-mo>
+            <input type="text" placeholder="请输入作者">
+            <button type="submit">添加</button>
+            <hr>
+            <table border="1" width="800px">
+                <tr>
+                    <td>id</td>
+                    <td>书名</td>
+                    <td>作者</td>
+                    <td>添加时间</td>
+                    <td><a>管理</a></td>
+                </tr>
+                <tr v-for="item in list">
+                    <td>{{item.id}}</td>
+                    <td>{{item.libry}}</td>
+                    <td>{{item.name}}</td>
+                    <td>添加时间</td>
+                    <td><a>删除</a></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <script src="./vue2.6.14.js"></script>
+<script>
+    const vm = new Vue({
+        el:'#app',
+        data: {
+            list:[
+            {id:1,name:'zs',libry:'西游记' },
+            {id:2,name:'李四',libry:'西游记' },
+            {id:3,name:'王伟',libry:'西游记' },
+            {id:4,name:'冰心',libry:'水浒' },
+            {id:5,name:'李大钊',libry:'红楼梦' },
+            {id:6,name:'zs',libry:'西游记' },
+            {id:7,name:'zs',libry:'西游记' }
+        ]
+        }
+    })
+</script>
+</body>
+</html>

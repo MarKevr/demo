@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style type="text/css">
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    .outbox{
+        width: 1080px;
+        height: 420px;
+        margin: 20px auto;
+        overflow: hidden;
+        position: relative;
+
+    }
+    .outbox>.lunbo>ul{
+        width: 6480px;
+        height: 420px;
+        list-style: none;
+        /* white-space: nowrap; */
+        display: flex;
+        font-size: 0;
+        position: relative;
+        /* left: -1080px; */
+        /* z-index: 2; */
+        /* background-position: center;
+        background-repeat: no-repeat; */
+
+    }
+    .outbox>.lunbo>ul>li{
+        width: 4080px;
+        height: 420px;
+        background-position: center;
+        background-repeat: no-repeat;
+        /* user-select: none; */
+    }
+    .outbox>.lunbo>ul>li:nth-child(1){
+        background-image: url(./image/109951167142514848.jpg);
+    }
+    .outbox>.lunbo>ul>li:nth-child(2){
+       background-image: url(./image/109951167142520478.jpg); 
+    }
+    .outbox>.lunbo>ul>li:nth-child(3){
+        background-image: url(./image/109951167143596793.jpg);
+    }
+    .outbox>.lunbo>ul>li:nth-child(4){
+        background-image: url(./image/109951167143646028.jpg);
+    }
+    .outbox>.lunbo>ul>li:nth-child(5){
+        background-image: url(./image/109951167143652762.jpg);
+    }
+    .outbox>.lunbo>ul>li:nth-child(6){
+        background-image: url(./image/109951167143683266.jpg);
+    }
+    .outbox>.yuan{
+        /* width: 50px; */
+        position: absolute;
+        bottom: 15px;
+        left: 470px;
+        user-select: none;
+    }
+    .outbox>.yuan>span{
+        
+        display: inline-block;
+        width: 15px;
+        height: 15px;
+        margin-right: 10px;
+        background-color: rgba(0, 255, 255, 0.596);
+        border-radius: 15px;
+        /* user-select: none; */
+
+    }
+    .outbox>.yuan>span:hover{
+        background-color: rgba(207, 207, 207, 0.76);
+    }
+    .outbox>.left{
+        position: absolute;
+        left: 0px;
+        top: 185px;
+    }
+    .outbox>.right{
+        position: absolute;
+        right: 0px;
+        top: 185px;
+        /* cursor: hand; */
+
+    }
+    .outbox>i{
+        color: rgb(255, 255, 255);
+        font-size: 30px;
+        font-weight: bolder;
+        width: 50px;
+        height: 50px;
+        text-align: center;
+        line-height: 50px;
+        z-index: 2;
+        user-select: none;
+    }
+    .outbox>i:hover{
+        background-color: rgba(83, 83, 83, 0.685);
+        border-radius: 8px;
+    }
+</style>
+<body>
+    <div class="outbox" id="lunbo">
+        <i class="left" id="left" ><</i>
+        <i class="right" id="right">></i>
+        <div class="lunbo" >
+            <ul id="v_s">
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+            
+        </div>
+        <div class="yuan">
+            <span ></span>
+            <span ></span>
+            <span ></span>
+            <span ></span>
+            <span ></span>
+            <span ></span>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var v_s=document.getElementById("v_s");
+        var lunbo=document.getElementById("lunbo");
+        var su_v=document.getElementsByTagName("span");
+        var left=document.getElementById("left");
+        var right=document.getElementById("right");
+        var index=0;
+        var timelong=2000;
+        for(var i=0;i<su_v.length;i++){
+            su_v[i].num=i;
+
+            su_v[i].onclick=function(){
+                index=this.num;
+                v_s.style.left=-1080*index+"px";
+                for(var i=0;i<su_v.length;i++){
+                    terue(i,index,0)
+                };
+            };
+            
+        };
+        var time
+        su_v[0].style.backgroundColor="rgba(83, 83, 83, 0.685)";
+            function timestart(){
+                time=setInterval(function times(){
+                index++;
+                if(index>=su_v.length){
+                index=0;
+                 };
+                for(var i=0;i<su_v.length;i++){
+                    terue(i,index,0)
+                };
+                 v_s.style.left=-1080*index+"px";
+                },timelong);
+            }
+                timestart()
+                lunbo.onmouseenter = function(){
+                    clearInterval(time)
+                }
+                lunbo.onmouseleave = function(){
+                    timestart()
+                }
+        right.onclick=function(){
+                v_s.style.left=-1080*(index+1)+"px";
+                for(var i=0;i<su_v.length;i++){
+                    terue(i,index,1)
+                };
+                index++;
+                if(index>=su_v.length-1){
+                    index=-1;
+                };
+        }
+        left.onclick=function(){
+                if(index<=0){
+                    index=su_v.length;
+                }; 
+                v_s.style.left=-1080*(index-1)+"px";
+                for(var i=0;i<su_v.length;i++){
+                    terue(i,index,-1)
+                };
+                index--;
+        }
+        function terue(i,index,set){
+            su_v[i].style.backgroundColor="rgba(0, 255, 255, 0.596)";
+            su_v[index+set].style.backgroundColor="rgba(83, 83, 83, 0.685)";
+        }
+
+    </script>
+</body>
+</html>

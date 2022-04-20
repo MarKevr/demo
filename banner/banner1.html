@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style type="text/css">
+    .box{
+        margin: 10px auto;
+        width: 1080px;
+        height: 420px;
+        overflow: hidden;
+        position: relative;
+    }
+    .box>.chrd{
+        width: 8640px;
+        font-size: 0;
+        position: absolute;
+        left: -1080px;
+    }
+    .box>.cecle{
+        margin: 0 auto;
+        position: relative;
+        bottom: -400px;
+        width: 120px;
+        display: flex;
+        justify-content: space-evenly;
+    }
+    .cecle>span{
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        background-color: aqua;
+        border-radius: 10px;
+
+    }
+    .cecle>span:nth-child(1){
+        background-color: rgba(255,255,255,.3);
+    }
+    .box>.left,.right{
+        position: absolute;
+        z-index: 1;
+        top: 200px;
+        width: 50px;
+        height: 50px;
+        background-color: rgba(146, 146, 146, 0.3);
+        border-radius: 5px;
+        color: aliceblue;
+        font-size: 30px;
+        line-height: 50px;
+        text-align: center;
+        user-select:none;
+    }
+    .box>.left{
+        left: 20px;
+    }
+    .box>.right{
+        right: 20px;
+    }
+</style>
+<body>
+    <div class="box">
+        <div class="chrd">
+            <img src="./image/109951167143683266.jpg" alt="">
+            <img src="./image/109951167142514848.jpg" alt="">
+            <img src="./image/109951167142520478.jpg" alt="">
+            <img src="./image/109951167143596793.jpg" alt="">
+            <img src="./image/109951167143646028.jpg" alt="">
+            <img src="./image/109951167143652762.jpg" alt="">
+            <img src="./image/109951167143683266.jpg" alt="">
+            <img src="./image/109951167142514848.jpg" alt="">
+        </div>
+        <div class="left"><</div>
+        <div class="right">></div>
+        <div class="cecle"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+    </div>
+    <script src="./jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+        var $box = $('.box')
+        var $chrd = $('.chrd')
+        var $imgs = $('.cherd>img')
+        var $left = $('.box>.left')
+        var $right = $('.box>.right')
+        var $cecle =$('.cecle')
+        var $spans = $('.cecle>span')
+        var page_width = 1080
+        var time = 400
+        var item_time = 20
+        var imgcount=$spans.length
+        var getindex = 0
+        var index = 0
+        var moving = false
+        // console.log(imgcount) 
+        $box.hover(
+            function (){
+                $('.left,.right').css('display','block')
+            },
+            function (){
+                $('.left,.right').css('display','none')
+            }
+        )
+        $left.on('click',function(){
+            nextpage(true)
+        })
+        $right.on('click',function(){
+            nextpage(false)
+        })
+        var setinterval = setInterval(function(){
+            nextpage(false)
+        },2000)
+        $box.hover(function(){
+            clearInterval(setinterval)
+        },function(){
+            setinterval = setInterval(function(){
+            nextpage(false)
+        },2000)
+        })
+        $spans.click(function() {
+            var getindex=$(this).index()
+            if(getindex!=index){
+                nextpage(getindex)
+            }
+        })
+        function nextpage (next){
+            if(moving){
+                return
+            }
+            moving=true
+            var cherdleft=$chrd.position().left
+            // alert(cherdleft)
+            var offset = 0
+            if(typeof next==='boolean'){
+                offset = next?page_width:-page_width
+            }else{
+                offset=-(next-index)*page_width
+            }
+            var item_offset = offset/(time/item_time)
+            var targeleft = cherdleft+offset
+            var intervalid=setInterval(function(){
+                cherdleft += item_offset
+                if(cherdleft===targeleft) {
+                    clearInterval(intervalid)
+                    moving = false
+                    if(cherdleft===-(imgcount+1)*page_width){
+                        cherdleft=-page_width
+                    }else if (cherdleft===0){
+                        cherdleft=-imgcount*page_width
+                    }
+                }
+                $chrd.css('left',cherdleft)
+            },item_time)
+            updatepoints(next)
+        }
+        function updatepoints(next){
+            if(typeof next==='boolean'){
+                if(next){
+                getindex=index-1
+                if(getindex===-1){
+                    getindex=imgcount-1
+                }
+            }else{
+                getindex=index+1
+                if(getindex===imgcount){
+                    getindex=0
+                }
+            }
+            }else{
+                getindex=next
+            }
+            $spans.eq(index).css('background-color','aqua')
+            $spans.eq(getindex).css('background-color','rgba(255,255,255,.3)')
+            // $spans.eq(0).css('background-color','rgba(255,255,255,.3)')
+            index = getindex
+        }
+    })
+    </script>
+</body>
+</html>
